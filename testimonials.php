@@ -26,7 +26,7 @@
 
 if ( ! function_exists('testimonials') ) {
 
-// Register Custom Post Type
+// Register custom post type
 function testimonials() {
 
 	$labels = array(
@@ -75,10 +75,10 @@ add_action( 'init', 'testimonials', 0 );
 
 }
 
-// Add Shortcode
+// Add shortcode
 function testimonial_shortcode( $atts ) {
 
-	// Attributes
+	// attributes
 	extract( shortcode_atts(
 		array(
 			'id' => '1',
@@ -86,3 +86,41 @@ function testimonial_shortcode( $atts ) {
 	);
 }
 add_shortcode( 'testimwonial', 'testimonial_shortcode' );
+
+// Add custom metaboxes
+add_action( 'add_meta_boxes', 'testimonial_author_metabox' );
+function testimonial_author_metabox() {
+    add_meta_box( 'testimonial-author', 'Testimonial Name', 'testimonial_callback', 'testimonial' );
+}
+
+// Print metabox content
+function testimonial_callback( $post ) {
+    // add nonce field to check for later
+    wp_nonce_field( 'testimonial_author_meta', 'testimonial_author_meta_nonce' );
+
+    // get meta from database
+    $custom_values = get_post_custom( $post->ID );
+    $testimonial_author = isset( $custom_values['testimonial_author'] ? esc_attr( $custom_values['testimonial_author'] ) : '' );
+
+    echo '<label for="testimonial_author">Testimonial Author:</label>
+    <input type="text" name="testimonial_author" placeholder="John Doe" />';
+}
+
+// Save custom metadata
+add_action( 'save_post', 'save_metabox' );
+function save_metabox( $post_id ) {
+    // bail if autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+
+    // check for valid nonces
+    if ( ! isset( $_POST['testimonial_meta_nonce'] ) || ! wp_verify_nonce( $_POST['testimonial_meta_nonce'], 'testimonial_author_meta' ) ) return;
+
+    // check the user's permissions
+    if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
+
+    // sanitize user input
+    $testimonial_author_sanitized = sanitize_text_field( $_POST['testimonial_author'] );
+
+    // update the meta fields in database
+    if ( isset( $_POST['testimonial_author'] ) ) update_post_meta( $post_id, 'testimonial_author', $testimonial_author_sanitized );
+}
