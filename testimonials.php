@@ -49,6 +49,12 @@ function pressed_testimonials() {
 		'not_found'           => 'Not found',
 		'not_found_in_trash'  => 'Not found in Trash',
 	);
+	$rewrite = array(
+		'slug'                => 'testimonials',
+		'with_front'          => true,
+		'pages'               => true,
+		'feeds'               => true,
+	);
 	$args = array(
 		'label'               => 'testimonial',
 		'description'         => 'Testimonials',
@@ -67,6 +73,7 @@ function pressed_testimonials() {
 		'has_archive'         => true,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
+        'rewrite'             => $rewrite,
 		'capability_type'     => 'page',
 	);
 	register_post_type( 'testimonial', $args );
