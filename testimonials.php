@@ -30,7 +30,7 @@ function my_flush_rewrite_rules() {
 }
 
 // Register custom post type
-function testimonials() {
+function pressed_testimonials() {
 
 	$labels = array(
 		'name'                => 'Testimonials',
@@ -72,7 +72,7 @@ function testimonials() {
 	register_post_type( 'testimonial', $args );
 
 }
-add_action( 'init', 'testimonials', 0 );
+add_action( 'init', 'pressed_testimonials', 0 );
 
 
 // Add shortcode
@@ -85,7 +85,7 @@ function testimonial_shortcode( $atts ) {
 		), $atts )
 	);
 }
-add_shortcode( 'testimwonial', 'testimonial_shortcode' );
+add_shortcode( 'testimonial', 'testimonial_shortcode' );
 
 // Add custom metaboxes
 add_action( 'add_meta_boxes', 'testimonial_author_metabox' );
