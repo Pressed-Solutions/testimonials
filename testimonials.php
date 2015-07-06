@@ -115,7 +115,7 @@ function save_metabox( $post_id ) {
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
     // check for valid nonces
-    if ( ! isset( $_POST['testimonial_meta_nonce'] ) || ! wp_verify_nonce( $_POST['testimonial_meta_nonce'], 'testimonial_author_meta' ) ) return;
+    if ( ! isset( $_POST['testimonial_author_meta_nonce'] ) || ! wp_verify_nonce( $_POST['testimonial_author_meta_nonce'], 'testimonial_author_meta' ) ) return;
 
     // check the user's permissions
     if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
