@@ -23,8 +23,12 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
-if ( ! function_exists('testimonials') ) {
+register_activation_hook( __FILE__, 'my_flush_rewrite_rules' );
+register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
+function my_flush_rewrite_rules() {
+    add_action( 'init', 'testimonials', 0 );
+    flush_rewrite_rules();
+}
 
 // Register custom post type
 function testimonials() {
@@ -67,11 +71,6 @@ function testimonials() {
 		'capability_type'     => 'page',
 	);
 	register_post_type( 'testimonial', $args );
-
-}
-
-// Hook into the 'init' action
-add_action( 'init', 'testimonials', 0 );
 
 }
 
