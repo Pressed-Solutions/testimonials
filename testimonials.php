@@ -26,7 +26,6 @@
 register_activation_hook( __FILE__, 'my_flush_rewrite_rules' );
 register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
 function my_flush_rewrite_rules() {
-    add_action( 'init', 'testimonials', 0 );
     flush_rewrite_rules();
 }
 
@@ -73,6 +72,8 @@ function testimonials() {
 	register_post_type( 'testimonial', $args );
 
 }
+add_action( 'init', 'testimonials', 0 );
+
 
 // Add shortcode
 function testimonial_shortcode( $atts ) {
