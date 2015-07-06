@@ -100,7 +100,7 @@ function testimonial_callback( $post ) {
 
     // get meta from database
     $custom_values = get_post_custom( $post->ID );
-    $testimonial_author = esc_attr( $custom_values['testimonial_author'] );
+    $testimonial_author = esc_attr( $custom_values['testimonial_author'][0] );
 
     echo '<label for="testimonial_author">Testimonial Author:</label>
     <input type="text" name="testimonial_author" placeholder="John Doe "';
