@@ -90,7 +90,7 @@ add_shortcode( 'testimonial', 'testimonial_shortcode' );
 // Add custom metaboxes
 add_action( 'add_meta_boxes', 'testimonial_author_metabox' );
 function testimonial_author_metabox() {
-    add_meta_box( 'testimonial-author', 'Testimonial Name', 'testimonial_callback', 'testimonial' );
+    add_meta_box( 'testimonial-author', 'Testimonial Author', 'testimonial_callback', 'testimonial' );
 }
 
 // Print metabox content
