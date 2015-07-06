@@ -88,9 +88,35 @@ function testimonial_shortcode( $atts ) {
 	// attributes
 	extract( shortcode_atts(
 		array(
-			'id' => '1',
+			'postid' => '1',
 		), $atts )
 	);
+
+    // WP_Query arguments
+    $args = array (
+        'p'                      => $postid,
+        'post_type'              => array( 'testimonial' ),
+        'posts_per_page'         => '1',
+    );
+
+    // The Query
+    $testimonial_query = new WP_Query( $args );
+
+    // The Loop
+    if ( $testimonial_query->have_posts() ) {
+        while ( $testimonial_query->have_posts() ) {
+            $testimonial_query->the_post();
+            the_title();
+            the_content();
+            if ( get_post_meta( $post->ID, 'testimonial_author', true) ) { echo '<em>&mdash;' . esc_attr( get_post_meta( $post->ID, 'testimonial_author', true ) ) . '</em>'; }
+        }
+    } else {
+        // no posts found
+    }
+
+    // Restore original Post Data
+    wp_reset_postdata();
+
 }
 add_shortcode( 'testimonial', 'testimonial_shortcode' );
 
