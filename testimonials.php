@@ -103,7 +103,9 @@ function testimonial_callback( $post ) {
     $testimonial_author = esc_attr( $custom_values['testimonial_author'] );
 
     echo '<label for="testimonial_author">Testimonial Author:</label>
-    <input type="text" name="testimonial_author" placeholder="John Doe" />';
+    <input type="text" name="testimonial_author" placeholder="John Doe "';
+    if ( isset( $testimonial_author ) ) { echo 'value="' . $testimonial_author . '" '; }
+    echo '/>';
 }
 
 // Save custom metadata
