@@ -107,8 +107,7 @@ function testimonial_shortcode( $atts ) {
         while ( $testimonial_query->have_posts() ) {
             $testimonial_query->the_post();
             the_title();
-            the_content();
-            if ( get_post_meta( $post->ID, 'testimonial_author', true) ) { echo '<em>&mdash;' . esc_attr( get_post_meta( $post->ID, 'testimonial_author', true ) ) . '</em>'; }
+            the_excerpt();
         }
     } else {
         // no posts found
