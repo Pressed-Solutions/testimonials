@@ -106,9 +106,9 @@ function testimonial_shortcode( $atts ) {
     if ( $testimonial_query->have_posts() ) {
         while ( $testimonial_query->have_posts() ) {
             $testimonial_query->the_post();
-            echo '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+            $shortcode_output .= '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
             the_excerpt();
-            if ( get_post_meta( get_the_ID(), 'testimonial_author', true) ) { echo '<em>&mdash;' . esc_attr( get_post_meta( get_the_ID(), 'testimonial_author', true ) ) . '</em>'; }
+            if ( get_post_meta( get_the_ID(), 'testimonial_author', true) ) { $shortcode_output .= '<em>&mdash;' . esc_attr( get_post_meta( get_the_ID(), 'testimonial_author', true ) ) . '</em>'; }
         }
     } else {
         // no posts found
@@ -117,6 +117,8 @@ function testimonial_shortcode( $atts ) {
     // Restore original Post Data
     wp_reset_postdata();
 
+    // print data
+    return $shortcode_output;
 }
 add_shortcode( 'testimonial', 'testimonial_shortcode' );
 
