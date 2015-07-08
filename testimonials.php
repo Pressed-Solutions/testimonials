@@ -3,7 +3,7 @@
  * Plugin Name: Simple Testimonials
  * Plugin URI: https://github.com/Pressed-Solutions/testimonials
  * Description: A plugin to display testimonials with a shortcode
- * Version: 1.0
+ * Version: 1.1
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
  * License:     GPL2
