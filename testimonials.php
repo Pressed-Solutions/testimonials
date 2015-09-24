@@ -107,7 +107,7 @@ function testimonial_shortcode( $atts ) {
         while ( $testimonial_query->have_posts() ) {
             $testimonial_query->the_post();
             $shortcode_output .= '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
-            the_excerpt();
+            $shortcode_output .= get_the_excerpt();
             if ( get_post_meta( get_the_ID(), 'testimonial_author', true) ) { $shortcode_output .= '<em>&mdash;' . esc_attr( get_post_meta( get_the_ID(), 'testimonial_author', true ) ) . '</em>'; }
         }
     } else {
