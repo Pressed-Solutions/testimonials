@@ -32,51 +32,51 @@ function my_flush_rewrite_rules() {
 // Register custom post type
 function pressed_testimonials() {
 
-	$labels = array(
-		'name'                => 'Testimonials',
-		'singular_name'       => 'Testimonial',
-		'menu_name'           => 'Testimonials',
-		'name_admin_bar'      => 'Testimonials',
-		'parent_item_colon'   => 'Parent Testimonial:',
-		'all_items'           => 'All Testimonials',
-		'add_new_item'        => 'Add New Testimonials',
-		'add_new'             => 'Add New',
-		'new_item'            => 'New Testimonial',
-		'edit_item'           => 'Edit Testimonial',
-		'update_item'         => 'Update Testimonial',
-		'view_item'           => 'View Testimonial',
-		'search_items'        => 'Search Testimonial',
-		'not_found'           => 'Not found',
-		'not_found_in_trash'  => 'Not found in Trash',
-	);
-	$rewrite = array(
-		'slug'                => 'testimonials',
-		'with_front'          => true,
-		'pages'               => true,
-		'feeds'               => true,
-	);
-	$args = array(
-		'label'               => 'testimonial',
-		'description'         => 'Testimonials',
-		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', ),
-		'taxonomies'          => array( 'category', 'post_tag' ),
-		'hierarchical'        => false,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'menu_position'       => 5,
-		'menu_icon'           => 'dashicons-format-chat',
-		'show_in_admin_bar'   => true,
-		'show_in_nav_menus'   => true,
-		'can_export'          => true,
-		'has_archive'         => true,
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
+    $labels = array(
+        'name'                => 'Testimonials',
+        'singular_name'       => 'Testimonial',
+        'menu_name'           => 'Testimonials',
+        'name_admin_bar'      => 'Testimonials',
+        'parent_item_colon'   => 'Parent Testimonial:',
+        'all_items'           => 'All Testimonials',
+        'add_new_item'        => 'Add New Testimonials',
+        'add_new'             => 'Add New',
+        'new_item'            => 'New Testimonial',
+        'edit_item'           => 'Edit Testimonial',
+        'update_item'         => 'Update Testimonial',
+        'view_item'           => 'View Testimonial',
+        'search_items'        => 'Search Testimonial',
+        'not_found'           => 'Not found',
+        'not_found_in_trash'  => 'Not found in Trash',
+    );
+    $rewrite = array(
+        'slug'                => 'testimonials',
+        'with_front'          => true,
+        'pages'               => true,
+        'feeds'               => true,
+    );
+    $args = array(
+        'label'               => 'testimonial',
+        'description'         => 'Testimonials',
+        'labels'              => $labels,
+        'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', ),
+        'taxonomies'          => array( 'category', 'post_tag' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-format-chat',
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => true,
+        'can_export'          => true,
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
         'rewrite'             => $rewrite,
-		'capability_type'     => 'page',
-	);
-	register_post_type( 'testimonial', $args );
+        'capability_type'     => 'page',
+    );
+    register_post_type( 'testimonial', $args );
 
 }
 add_action( 'init', 'pressed_testimonials', 0 );
@@ -85,12 +85,12 @@ add_action( 'init', 'pressed_testimonials', 0 );
 // Add shortcode
 function testimonial_shortcode( $atts ) {
 
-	// attributes
-	extract( shortcode_atts(
-		array(
-			'postid' => '1',
-		), $atts )
-	);
+    // attributes
+    extract( shortcode_atts(
+        array(
+            'postid' => '1',
+        ), $atts )
+    );
 
     // WP_Query arguments
     $args = array (
