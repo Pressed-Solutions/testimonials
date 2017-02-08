@@ -3,7 +3,7 @@
  * Plugin Name: Simple Testimonials
  * Plugin URI: https://github.com/Pressed-Solutions/testimonials
  * Description: A plugin to display testimonials with a shortcode
- * Version: 1.1
+ * Version: 2.0
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
  * License:     GPL2
@@ -81,23 +81,37 @@ function pressed_testimonials() {
 }
 add_action( 'init', 'pressed_testimonials', 0 );
 
-
 // Add shortcode
 function testimonial_shortcode( $atts ) {
-
     // attributes
     extract( shortcode_atts(
         array(
-            'postid' => '1',
+            'postid'            => 1,
+            'posts_per_page'    => 10,
+            'order'             => 'DESC',
+            'orderby'           => 'date',
+            'tax_taxonomy'      => 'category',
+            'tax_field'         => 'term_id',
+            'tax_terms'         => NULL,
+            'tax_operator'      => 'IN',
         ), $atts )
     );
 
     // WP_Query arguments
     $args = array (
-        'p'                      => $postid,
-        'post_type'              => array( 'testimonial' ),
-        'posts_per_page'         => '1',
+        'post_type'         => array( 'testimonial' ),
+        'p'                 => $postid,
+        'posts_per_page'    => $posts_per_page,
     );
+
+    if ( $tax_taxonomy && $tax_terms ) {
+        $args['tax_query'] = array( array(
+            'taxonomy'      => $tax_taxonomy,
+            'field'         => $tax_field,
+            'tax_terms'     => $tax_terms,
+            'tax_operator'  => $tax_operator,
+        ));
+    }
 
     // The Query
     $testimonial_query = new WP_Query( $args );
