@@ -59,7 +59,7 @@ function pressed_testimonials() {
         'label'               => 'testimonial',
         'description'         => 'Testimonials',
         'labels'              => $labels,
-        'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', ),
+        'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'revisions', 'page-attributes', ),
         'taxonomies'          => array( 'category', 'post_tag' ),
         'hierarchical'        => false,
         'public'              => true,
