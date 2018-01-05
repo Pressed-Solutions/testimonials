@@ -19,8 +19,11 @@ Options
 Changelog
 ---------
 
+### 2.2
+- Add wrapping `<article>` to each testimonial
+
 ### 2.1
- - Add support for `show_content` parameter
+- Add support for `show_content` parameter
 
 ### 2.0
 - Add support for `order`, `orderby`, `posts_per_page`, and `taxonomy` parameters

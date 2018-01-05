@@ -3,7 +3,7 @@
  * Plugin Name: Simple Testimonials
  * Plugin URI: https://github.com/Pressed-Solutions/testimonials
  * Description: A plugin to display testimonials with a shortcode
- * Version: 2.1
+ * Version: 2.2.1
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
  * License:     GPL2
@@ -124,13 +124,14 @@ function testimonial_shortcode( $atts ) {
     if ( $testimonial_query->have_posts() ) {
         while ( $testimonial_query->have_posts() ) {
             $testimonial_query->the_post();
-            $shortcode_output .= '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+            $shortcode_output .= '<article class="' . implode( ' ', get_post_class( 'shortcode' ) ) . '"><h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
             if ( $show_content ) {
                 $shortcode_output .= apply_filters( 'the_content', get_the_content() );
             } else {
                 $shortcode_output .= get_the_excerpt();
             }
             if ( get_post_meta( get_the_ID(), 'testimonial_author', true) ) { $shortcode_output .= '<em>&mdash;' . esc_attr( get_post_meta( get_the_ID(), 'testimonial_author', true ) ) . '</em>'; }
+            $shortcode_output .= '</article>';
         }
     } else {
         // no posts found
