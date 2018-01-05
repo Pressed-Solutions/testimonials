@@ -23,9 +23,9 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-register_activation_hook( __FILE__, 'my_flush_rewrite_rules' );
+register_activation_hook( __FILE__, 'pressed_flush_rewrite_rules' );
 register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
-function my_flush_rewrite_rules() {
+function pressed_flush_rewrite_rules() {
     flush_rewrite_rules();
 }
 
@@ -82,7 +82,7 @@ function pressed_testimonials() {
 add_action( 'init', 'pressed_testimonials', 0 );
 
 // Add shortcode
-function testimonial_shortcode( $atts ) {
+function pressed_testimonial_shortcode( $atts ) {
     // attributes
     extract( shortcode_atts(
         array(
@@ -143,16 +143,16 @@ function testimonial_shortcode( $atts ) {
     // print data
     return $shortcode_output;
 }
-add_shortcode( 'testimonial', 'testimonial_shortcode' );
+add_shortcode( 'testimonial', 'pressed_testimonial_shortcode' );
 
 // Add custom metaboxes
-add_action( 'add_meta_boxes', 'testimonial_author_metabox' );
-function testimonial_author_metabox() {
-    add_meta_box( 'testimonial-author', 'Testimonial Author', 'testimonial_callback', 'testimonial' );
+add_action( 'add_meta_boxes', 'pressed_testimonial_author_metabox' );
+function pressed_testimonial_author_metabox() {
+    add_meta_box( 'testimonial-author', 'Testimonial Author', 'pressed_testimonial_callback', 'testimonial' );
 }
 
 // Print metabox content
-function testimonial_callback( $post ) {
+function pressed_testimonial_callback( $post ) {
     // add nonce field to check for later
     wp_nonce_field( 'testimonial_author_meta', 'testimonial_author_meta_nonce' );
 
@@ -167,8 +167,8 @@ function testimonial_callback( $post ) {
 }
 
 // Save custom metadata
-add_action( 'save_post', 'save_metabox' );
-function save_metabox( $post_id ) {
+add_action( 'save_post', 'pressed_save_metabox' );
+function pressed_save_metabox( $post_id ) {
     // bail if autosave
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
