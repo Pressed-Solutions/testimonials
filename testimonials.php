@@ -23,13 +23,19 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-register_activation_hook( __FILE__, 'pressed_flush_rewrite_rules' );
-register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
+/**
+ * Flush rewrite rules on activation
+ */
 function pressed_flush_rewrite_rules() {
+    pressed_testimonials();
     flush_rewrite_rules();
 }
+register_activation_hook( __FILE__, 'pressed_flush_rewrite_rules' );
+register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
 
-// Register custom post type
+/**
+ * Register Testimonials CPT
+ */
 function pressed_testimonials() {
 
     $labels = array(
@@ -81,7 +87,11 @@ function pressed_testimonials() {
 }
 add_action( 'init', 'pressed_testimonials', 0 );
 
-// Add shortcode
+/**
+ * Add [testimonials] shortcode
+ * @param  array  $atts shortcode parameters
+ * @return string HTML output
+ */
 function pressed_testimonial_shortcode( $atts ) {
     // attributes
     extract( shortcode_atts(
@@ -145,13 +155,18 @@ function pressed_testimonial_shortcode( $atts ) {
 }
 add_shortcode( 'testimonial', 'pressed_testimonial_shortcode' );
 
-// Add custom metaboxes
-add_action( 'add_meta_boxes', 'pressed_testimonial_author_metabox' );
+/**
+ * Add custom metaboxes
+ */
 function pressed_testimonial_author_metabox() {
     add_meta_box( 'testimonial-author', 'Testimonial Author', 'pressed_testimonial_callback', 'testimonial' );
 }
+add_action( 'add_meta_boxes', 'pressed_testimonial_author_metabox' );
 
-// Print metabox content
+/**
+ * Print metabox content
+ * @param object $post WP_Post
+ */
 function pressed_testimonial_callback( $post ) {
     // add nonce field to check for later
     wp_nonce_field( 'testimonial_author_meta', 'testimonial_author_meta_nonce' );
@@ -166,8 +181,10 @@ function pressed_testimonial_callback( $post ) {
     echo '/>';
 }
 
-// Save custom metadata
-add_action( 'save_post', 'pressed_save_metabox' );
+/**
+ * Save metabox metadata
+ * @param integer $post_id WP post ID
+ */
 function pressed_save_metabox( $post_id ) {
     // bail if autosave
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -184,3 +201,4 @@ function pressed_save_metabox( $post_id ) {
     // update the meta fields in database
     if ( isset( $_POST['testimonial_author'] ) ) update_post_meta( $post_id, 'testimonial_author', $testimonial_author_sanitized );
 }
+add_action( 'save_post', 'pressed_save_metabox' );
