@@ -14,12 +14,16 @@ Options
     - `field`
     - `terms`
     - `operator`
+- Show testimonials with full post content: `[testimonial show_content="true"]`
 
 Changelog
 ---------
 
+### 2.1
+ - Add support for `show_content` parameter
+
 ### 2.0
-- Add support for order, orderby, posts_per_page, and taxonomy parameters
+- Add support for `order`, `orderby`, `posts_per_page`, and `taxonomy` parameters
 
 ### 1.1
 - Improve output display
