@@ -3,7 +3,7 @@
  * Plugin Name: Simple Testimonials
  * Plugin URI: https://github.com/Pressed-Solutions/testimonials
  * Description: A plugin to display testimonials with a shortcode
- * Version: 2.2.1
+ * Version: 2.3
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
  * License:     GPL2
@@ -93,6 +93,7 @@ add_action( 'init', 'pressed_testimonials', 0 );
  * @return string HTML output
  */
 function pressed_testimonial_shortcode( $atts ) {
+    global $wp_query;
     // attributes
     extract( shortcode_atts(
         array(
@@ -105,6 +106,7 @@ function pressed_testimonial_shortcode( $atts ) {
             'tax_terms'         => NULL,
             'tax_operator'      => 'IN',
             'show_content'      => false,
+            'show_paging'       => false,
         ), $atts )
     );
 
@@ -113,6 +115,10 @@ function pressed_testimonial_shortcode( $atts ) {
         'post_type'         => array( 'testimonial' ),
         'posts_per_page'    => $posts_per_page,
     );
+    if ( isset( $wp_query->query['page'] ) ) {
+        $page = $wp_query->query['page'];
+        $args['offset'] = $page * 10;
+    }
 
     if ( $postid ) {
         $args['p'] = $post_id;
@@ -131,6 +137,7 @@ function pressed_testimonial_shortcode( $atts ) {
     $testimonial_query = new WP_Query( $args );
 
     // The Loop
+    $shortcode_output = '';
     if ( $testimonial_query->have_posts() ) {
         while ( $testimonial_query->have_posts() ) {
             $testimonial_query->the_post();
@@ -142,6 +149,21 @@ function pressed_testimonial_shortcode( $atts ) {
             }
             if ( get_post_meta( get_the_ID(), 'testimonial_author', true) ) { $shortcode_output .= '<em>&mdash;' . esc_attr( get_post_meta( get_the_ID(), 'testimonial_author', true ) ) . '</em>'; }
             $shortcode_output .= '</article>';
+        }
+
+        // paging
+        if ( $show_paging ) {
+            $shortcode_output .= '<div class="paging">';
+            if ( $page > 1 ) {
+                $shortcode_output .= '<a class="btn btn-primary" href="' . home_url( $wp_query->query['pagename'] ) . '/' . ( $page - 1 ) . '">Previous</a> ';
+            }
+            if ( ( $page < $testimonial_query->max_num_pages ) && ( $testimonial_query->post_count === 10 )  ) {
+                if ( $page === '' ) {
+                    $page = 1;
+                }
+                $shortcode_output .= '<a class="btn btn-primary" href="' . home_url( $wp_query->query['pagename'] ) . '/' . ( $page + 1 ) . '">Next</a>';
+            $shortcode_output .= '</div>';
+            }
         }
     } else {
         // no posts found

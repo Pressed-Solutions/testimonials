@@ -15,9 +15,13 @@ Options
     - `terms`
     - `operator`
 - Show testimonials with full post content: `[testimonial show_content="true"]`
+- Show nav buttons: `[testimonial show_paging="true"]`
 
 Changelog
 ---------
+
+### 2.3
+ - Add `show_paging` parameter
 
 ### 2.2
 - Add wrapping `<article>` to each testimonial
