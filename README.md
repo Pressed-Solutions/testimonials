@@ -22,6 +22,8 @@ Changelog
 
 ### 2.4
  - Convert to class-based plugin
+ - Add rating taxonomy and `show_rating` parameter
+ - Add `.testimonials.shortcode` wrapper to the entire shortcode block
 
 ### 2.3
  - Add `show_paging` parameter
