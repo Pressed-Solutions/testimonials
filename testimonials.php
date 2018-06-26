@@ -249,7 +249,7 @@ class Simple_Testimonials {
 	 * @return void Registers metabox.
 	 */
 	public function testimonial_author_metabox() {
-		add_meta_box( 'testimonial-author', 'Testimonial Author', array( $this, 'testimonial_callback' ), 'testimonial' );
+		add_meta_box( 'testimonial-author', 'Testimonial Author', array( $this, 'testimonial_callback' ), 'testimonial', 'normal', 'high' );
 	}
 
 	/**
