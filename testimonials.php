@@ -90,7 +90,7 @@ class Simple_Testimonials {
 			'description'         => 'Testimonials',
 			'labels'              => $labels,
 			'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'category', 'post_tag' ),
+			'taxonomies'          => array( 'category', 'post_tag', 'testimonial_rating' ),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -108,6 +108,36 @@ class Simple_Testimonials {
 		);
 		register_post_type( 'testimonial', $args );
 
+		$rating_labels = array(
+			'name'                       => 'Ratings',
+			'singular_name'              => 'Rating',
+			'menu_name'                  => 'Ratings',
+			'all_items'                  => 'All Ratings',
+			'parent_item'                => 'Parent Rating',
+			'parent_item_colon'          => 'Parent Rating:',
+			'new_item_name'              => 'New Rating Name',
+			'add_new_item'               => 'Add New Rating',
+			'edit_item'                  => 'Edit Rating',
+			'update_item'                => 'Update Rating',
+			'view_item'                  => 'View Rating',
+			'separate_items_with_commas' => 'Separate ratings with commas',
+			'add_or_remove_items'        => 'Add or remove ratings',
+			'choose_from_most_used'      => 'Choose from the most used',
+			'popular_items'              => 'Popular Ratings',
+			'search_items'               => 'Search Ratings',
+			'not_found'                  => 'Not Found',
+		);
+		$rating_args   = array(
+			'labels'            => $rating_labels,
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => true,
+			'rewrite'           => false,
+		);
+		register_taxonomy( 'testimonial_rating', array( 'testimonial' ), $rating_args );
 	}
 
 	/**
@@ -131,6 +161,7 @@ class Simple_Testimonials {
 				'tax_terms'      => null,
 				'tax_operator'   => 'IN',
 				'show_content'   => false,
+				'show_rating'    => false,
 				'show_paging'    => false,
 			), $atts
 		);
@@ -171,11 +202,18 @@ class Simple_Testimonials {
 				$testimonial_author = get_post_meta( get_the_ID(), 'testimonial_author', true );
 
 				$shortcode_output .= '<article class="' . implode( ' ', get_post_class( 'shortcode' ) ) . '"><h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+				if ( $shortcode_atts['show_rating'] ) {
+					$shortcode_output .= '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
+				}
 
 				if ( $shortcode_atts['show_content'] ) {
 					$shortcode_output .= apply_filters( 'the_content', get_the_content() );
 				} else {
 					$shortcode_output .= get_the_excerpt();
+				}
+
+				if ( $shortcode_atts['show_rating'] ) {
+					$shortcode_output .= '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
 				}
 
 				if ( ! empty( $testimonial_author ) ) {
