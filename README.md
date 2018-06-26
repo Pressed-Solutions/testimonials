@@ -29,6 +29,10 @@ The filter `simple_testimonials_star_html` can be used to change the star HTML c
 Changelog
 ---------
 
+### 2.6
+ - Add length taxonomy
+ - Add `wrapper_class` shortcode parameter
+
 ### 2.5
  - Add star rating
 
@@ -43,7 +47,7 @@ Changelog
 
 ### 2.4
  - Convert to class-based plugin
- - Add rating taxonomy and `show_rating` parameter
+ - Add rating taxonomy and `show_rating` shortcode parameter
  - Add `.testimonials.shortcode` wrapper to the entire shortcode block
 
 ### 2.3
