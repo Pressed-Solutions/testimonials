@@ -39,6 +39,7 @@ class Simple_Testimonials {
 
 		// Shortcode.
 		add_shortcode( 'testimonial', array( $this, 'shortcode_testimonial' ) );
+		add_shortcode( 'testimonials', array( $this, 'shortcode_testimonial' ) );
 
 		// Metabox.
 		add_action( 'add_meta_boxes', array( $this, 'testimonial_author_metabox' ) );
