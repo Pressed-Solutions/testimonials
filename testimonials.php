@@ -5,7 +5,7 @@
  * Description: A plugin to display testimonials with a shortcode
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
- * Version: 2.4.1
+ * Version: 2.4.2
  * Tested up to: 4.9.6
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -205,9 +205,6 @@ class Simple_Testimonials {
 				$testimonial_author = get_post_meta( get_the_ID(), 'testimonial_author', true );
 
 				$shortcode_output .= '<article class="' . implode( ' ', get_post_class( 'shortcode' ) ) . '"><h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
-				if ( $shortcode_atts['show_rating'] ) {
-					$shortcode_output .= '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
-				}
 
 				if ( $shortcode_atts['show_content'] ) {
 					$shortcode_output .= apply_filters( 'the_content', get_the_content() );

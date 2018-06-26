@@ -21,6 +21,9 @@ Options
 Changelog
 ---------
 
+### 2.4.2
+ - Remove duplicate rating section
+
 ### 2.4.1
  - Correctly parse all input arguments
 
