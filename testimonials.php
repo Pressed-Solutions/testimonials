@@ -307,7 +307,7 @@ class Simple_Testimonials {
 
 		// Get meta from database.
 		$testimonial_author = get_post_meta( $post->ID, 'testimonial_author', true );
-		$star_rating = get_post_meta( $post->ID, 'star_rating', true );
+		$star_rating        = get_post_meta( $post->ID, 'star_rating', true );
 		?>
 
 		<p>
@@ -352,7 +352,7 @@ class Simple_Testimonials {
 		if ( isset( $_POST['testimonial_author'] ) ) {
 			// Sanitize user input.
 			$testimonial_author_sanitized = sanitize_text_field( $_POST['testimonial_author'] );
-			$star_rating_sanitized = sanitize_text_field( $_POST['star_rating'] );
+			$star_rating_sanitized        = sanitize_text_field( $_POST['star_rating'] );
 
 			// Update the meta fields in database.
 			update_post_meta( $post_id, 'testimonial_author', $testimonial_author_sanitized );
