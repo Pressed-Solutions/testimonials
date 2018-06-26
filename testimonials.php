@@ -197,49 +197,49 @@ class Simple_Testimonials {
 
 		$testimonial_query = new WP_Query( $args );
 
-		$shortcode_output = '';
+		ob_start();
 		if ( $testimonial_query->have_posts() ) {
 			echo '<div class="testimonials shortcode">';
 			while ( $testimonial_query->have_posts() ) {
 				$testimonial_query->the_post();
 				$testimonial_author = get_post_meta( get_the_ID(), 'testimonial_author', true );
 
-				$shortcode_output .= '<article class="' . implode( ' ', get_post_class( 'shortcode' ) ) . '"><h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+				echo '<article class="' . esc_attr( implode( ' ', get_post_class( 'shortcode' ) ) ) . '"><h3><a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a></h3>';
 
 				if ( $shortcode_atts['show_content'] ) {
-					$shortcode_output .= apply_filters( 'the_content', get_the_content() );
+					echo wp_kses_post( apply_filters( 'the_content', get_the_content() ) );
 				} else {
-					$shortcode_output .= get_the_excerpt();
+					the_excerpt();
 				}
 
 				if ( $shortcode_atts['show_rating'] ) {
-					$shortcode_output .= '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
+					echo '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
 				}
 
 				if ( ! empty( $testimonial_author ) ) {
-					$shortcode_output .= '<em>&mdash;' . esc_attr( $testimonial_author ) . '</em>'; }
-				$shortcode_output .= '</article>';
+					echo '<em>&mdash;' . esc_attr( $testimonial_author ) . '</em>'; }
+				echo '</article>';
 			}
 
 			// Paging.
 			if ( $shortcode_atts['show_paging'] ) {
-				$shortcode_output .= '<div class="paging">';
+				echo '<div class="paging">';
 				if ( $page > 1 ) {
-					$shortcode_output .= '<a class="btn btn-primary button" href="' . home_url( $wp_query->query['pagename'] ) . '/' . ( $page - 1 ) . '">Previous</a> ';
+					echo '<a class="btn btn-primary button" href="' . esc_url( home_url( $wp_query->query['pagename'] ) ) . '/' . esc_attr( $page - 1 ) . '">Previous</a> ';
 				}
 				if ( ( $page < $testimonial_query->max_num_pages ) && ( 10 === $testimonial_query->post_count ) ) {
 					if ( '' === $page ) {
 						$page = 1;
 					}
-					$shortcode_output .= '<a class="btn btn-primary button" href="' . home_url( $wp_query->query['pagename'] ) . '/' . ( $page + 1 ) . '">Next</a>';
-					$shortcode_output .= '</div>';
+					echo '<a class="btn btn-primary button" href="' . esc_url( home_url( $wp_query->query['pagename'] ) ) . '/' . esc_attr( $page + 1 ) . '">Next</a>';
+					echo '</div>';
 				}
 			}
 			echo '</div>';
 		}
 		wp_reset_postdata();
 
-		return $shortcode_output;
+		return ob_get_clean();
 	}
 
 	/**
