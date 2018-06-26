@@ -16,6 +16,7 @@ Options
     - `operator`
 - Show testimonials with full post content: `[testimonial show_content="true"]`
 - Show nav buttons: `[testimonial show_paging="true"]`
+- Show ratings: `[testimonial show_rating="true"]`
 
 Changelog
 ---------
