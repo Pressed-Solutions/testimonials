@@ -10,7 +10,9 @@
 	<arg name="extensions" value="php"/>
 	<file>.</file>
 
-	<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+	<rule ref="WordPress.Files">
+		<exclude name="WordPress.Files.FileName" />
+	</rule>
 
 	<!-- Show progress and sniff codes in all reports -->
 	<arg value="ps"/>
