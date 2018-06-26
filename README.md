@@ -16,10 +16,24 @@ Options
     - `operator`
 - Show testimonials with full post content: `[testimonial show_content="true"]`
 - Show nav buttons: `[testimonial show_paging="true"]`
+- Show stars: `[testimonial show_stars="true"]`
 - Show ratings: `[testimonial show_rating="true"]`
+
+Filters
+-----
+
+By default, the `show_star` parameter loads the `dashicons` stylesheet. Use the filter `testimonials_enqueue_dashicons` to return `false` to disable it from loading.
+
+The filter `testimonials_star_html` can be used to change the star HTML content (e.g., using an image, a different class, etc.). This string will be printed once for each star.
 
 Changelog
 ---------
+
+### 2.5
+ - Add star rating
+
+### 2.4.3
+ - Fix content being output too early
 
 ### 2.4.2
  - Remove duplicate rating section

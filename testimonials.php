@@ -5,7 +5,7 @@
  * Description: A plugin to display testimonials with a shortcode
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
- * Version: 2.4.2
+ * Version: 2.5
  * Tested up to: 4.9.6
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -163,6 +163,7 @@ class Simple_Testimonials {
 				'tax_operator'   => 'IN',
 				'show_content'   => false,
 				'show_rating'    => false,
+				'show_stars'     => false,
 				'show_paging'    => false,
 			), $atts
 		);
@@ -216,8 +217,18 @@ class Simple_Testimonials {
 					echo '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
 				}
 
+				if ( $shortcode_atts['show_stars'] ) {
+					// By default, enqueue dashicons stylesheet.
+					if ( apply_filters( 'testimonials_enqueue_dashicons', true ) ) {
+						wp_enqueue_style( 'dashicons' );
+					}
+
+					$stars = get_post_meta( get_the_ID(), 'star_rating', true );
+					echo '<p class="stars" data-value="' . esc_attr( $stars ) . '">' . wp_kses_post( str_repeat( apply_filters( 'testimonials_star_html', '<span class="dashicons-before dashicons-star-filled"></span>' ), (int) $stars ) ) . '</p>';
+				}
+
 				if ( ! empty( $testimonial_author ) ) {
-					echo '<em>&mdash;' . esc_attr( $testimonial_author ) . '</em>'; }
+					echo '<p class="author"><em>&mdash;' . esc_attr( $testimonial_author ) . '</em></p>'; }
 				echo '</article>';
 			}
 
@@ -248,7 +259,7 @@ class Simple_Testimonials {
 	 * @return void Registers metabox.
 	 */
 	public function testimonial_author_metabox() {
-		add_meta_box( 'testimonial-author', 'Testimonial Author', array( $this, 'testimonial_callback' ), 'testimonial', 'normal', 'high' );
+		add_meta_box( 'testimonial-author', 'Testimonial Information', array( $this, 'testimonial_metabox_content' ), 'testimonial', 'normal', 'high' );
 	}
 
 	/**
@@ -258,18 +269,29 @@ class Simple_Testimonials {
 	 *
 	 * @return  void Prints HTML content.
 	 */
-	public function testimonial_callback( WP_Post $post ) {
+	public function testimonial_metabox_content( WP_Post $post ) {
 		// Add nonce field to check for later.
 		wp_nonce_field( 'testimonial_author_meta', 'testimonial_author_meta_nonce' );
 
 		// Get meta from database.
 		$testimonial_author = get_post_meta( $post->ID, 'testimonial_author', true );
+		$star_rating = get_post_meta( $post->ID, 'star_rating', true );
+		?>
 
-		echo '<label for="testimonial_author">Testimonial Author:</label>
-        <input type="text" name="testimonial_author" placeholder="John Doe"';
-		if ( isset( $testimonial_author ) ) {
-			echo ' value="' . esc_attr( $testimonial_author ) . '" '; }
-		echo '/>';
+		<p>
+			<label for="testimonial_author">Testimonial Author:</label>
+			<input type="text" name="testimonial_author" placeholder="John Doe" value="<?php echo esc_attr( $testimonial_author ); ?>" />
+		</p>
+
+		<p>
+			<label for="star_rating">Rating:</label><br/>
+			<label><input type="radio" name="star_rating" value="1" <?php checked( 1, $star_rating ); ?> /><span class="dashicons-before dashicons-star-filled"></span></label><br/>
+			<label><input type="radio" name="star_rating" value="2" <?php checked( 2, $star_rating ); ?> /><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"></span></label><br/>
+			<label><input type="radio" name="star_rating" value="3" <?php checked( 3, $star_rating ); ?> /><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"></span></label><br/>
+			<label><input type="radio" name="star_rating" value="4" <?php checked( 4, $star_rating ); ?> /><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"></span></label><br/>
+			<label><input type="radio" name="star_rating" value="5" <?php checked( 5, $star_rating ); ?> /><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"><span class="dashicons-before dashicons-star-filled"></span></label><br/>
+		</p>
+		<?php
 	}
 
 	/**
@@ -298,9 +320,11 @@ class Simple_Testimonials {
 		if ( isset( $_POST['testimonial_author'] ) ) {
 			// Sanitize user input.
 			$testimonial_author_sanitized = sanitize_text_field( $_POST['testimonial_author'] );
+			$star_rating_sanitized = sanitize_text_field( $_POST['star_rating'] );
 
 			// Update the meta fields in database.
 			update_post_meta( $post_id, 'testimonial_author', $testimonial_author_sanitized );
+			update_post_meta( $post_id, 'star_rating', $star_rating_sanitized );
 		}
 	}
 }
