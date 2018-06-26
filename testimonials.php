@@ -173,6 +173,8 @@ class Simple_Testimonials {
 			'posts_per_page' => $shortcode_atts['posts_per_page'],
 		);
 
+		$args = wp_parse_args( $shortcode_atts, $args );
+
 		if ( ! empty( $wp_query->query['page'] ) ) {
 			$page           = $wp_query->query['page'];
 			$args['offset'] = $page * 10;
