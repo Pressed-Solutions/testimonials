@@ -20,6 +20,9 @@ Options
 Changelog
 ---------
 
+### 2.4
+ - Convert to class-based plugin
+
 ### 2.3
  - Add `show_paging` parameter
 
