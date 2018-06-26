@@ -21,6 +21,9 @@ Options
 Changelog
 ---------
 
+### 2.4.1
+ - Correctly parse all input arguments
+
 ### 2.4
  - Convert to class-based plugin
  - Add rating taxonomy and `show_rating` parameter

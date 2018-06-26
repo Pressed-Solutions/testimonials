@@ -5,7 +5,7 @@
  * Description: A plugin to display testimonials with a shortcode
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
- * Version: 2.4
+ * Version: 2.4.1
  * Tested up to: 4.9.6
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
