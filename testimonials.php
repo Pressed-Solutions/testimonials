@@ -91,7 +91,7 @@ class Simple_Testimonials {
 			'description'         => 'Testimonials',
 			'labels'              => $labels,
 			'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'category', 'post_tag', 'testimonial_rating' ),
+			'taxonomies'          => array( 'category', 'post_tag', 'testimonial_length', 'testimonial_rating' ),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -139,6 +139,37 @@ class Simple_Testimonials {
 			'rewrite'           => false,
 		);
 		register_taxonomy( 'testimonial_rating', array( 'testimonial' ), $rating_args );
+
+		$length_labels = array(
+			'name'                       => 'Lengths',
+			'singular_name'              => 'Length',
+			'menu_name'                  => 'Lengths',
+			'all_items'                  => 'All Lengths',
+			'parent_item'                => 'Parent Length',
+			'parent_item_colon'          => 'Parent Length:',
+			'new_item_name'              => 'New Length Name',
+			'add_new_item'               => 'Add New Length',
+			'edit_item'                  => 'Edit Length',
+			'update_item'                => 'Update Length',
+			'view_item'                  => 'View Length',
+			'separate_items_with_commas' => 'Separate lengths with commas',
+			'add_or_remove_items'        => 'Add or remove lengths',
+			'choose_from_most_used'      => 'Choose from the most used',
+			'popular_items'              => 'Popular Lengths',
+			'search_items'               => 'Search Lengths',
+			'not_found'                  => 'Not Found',
+		);
+		$length_args   = array(
+			'labels'            => $length_labels,
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => true,
+			'rewrite'           => false,
+		);
+		register_taxonomy( 'testimonial_length', array( 'testimonial' ), $length_args );
 	}
 
 	/**
