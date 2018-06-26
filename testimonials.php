@@ -42,8 +42,8 @@ class Simple_Testimonials {
 		add_shortcode( 'testimonials', array( $this, 'shortcode_testimonial' ) );
 
 		// Metabox.
-		add_action( 'add_meta_boxes', array( $this, 'testimonial_author_metabox' ) );
-		add_action( 'save_post', array( $this, 'save_metabox' ) );
+		add_action( 'add_meta_boxes_testimonial', array( $this, 'testimonial_author_metabox' ), 5 );
+		add_action( 'save_post_testimonial', array( $this, 'save_metabox' ) );
 	}
 
 	/**
@@ -281,11 +281,6 @@ class Simple_Testimonials {
 	 * @return  void Updates post meta.
 	 */
 	public function save_metabox( int $post_id ) {
-		// Bail if not a testimonial post.
-		if ( 'testimonial' !== get_post_type() ) {
-			return;
-		}
-
 		// Bail if autosave.
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
@@ -301,11 +296,11 @@ class Simple_Testimonials {
 			return;
 		}
 
-		// Sanitize user input.
-		$testimonial_author_sanitized = sanitize_text_field( $_POST['testimonial_author'] );
-
-		// Update the meta fields in database.
 		if ( isset( $_POST['testimonial_author'] ) ) {
+			// Sanitize user input.
+			$testimonial_author_sanitized = sanitize_text_field( $_POST['testimonial_author'] );
+
+			// Update the meta fields in database.
 			update_post_meta( $post_id, 'testimonial_author', $testimonial_author_sanitized );
 		}
 	}
