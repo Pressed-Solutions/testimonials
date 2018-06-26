@@ -219,12 +219,12 @@ class Simple_Testimonials {
 
 				if ( $shortcode_atts['show_stars'] ) {
 					// By default, enqueue dashicons stylesheet.
-					if ( apply_filters( 'testimonials_enqueue_dashicons', true ) ) {
+					if ( apply_filters( 'simple_testimonials_enqueue_dashicons', true ) ) {
 						wp_enqueue_style( 'dashicons' );
 					}
 
 					$stars = get_post_meta( get_the_ID(), 'star_rating', true );
-					echo '<p class="stars" data-value="' . esc_attr( $stars ) . '">' . wp_kses_post( str_repeat( apply_filters( 'testimonials_star_html', '<span class="dashicons-before dashicons-star-filled"></span>' ), (int) $stars ) ) . '</p>';
+					echo '<p class="stars" data-value="' . esc_attr( $stars ) . '">' . wp_kses_post( str_repeat( apply_filters( 'simple_testimonials_star_html', '<span class="dashicons-before dashicons-star-filled"></span>' ), (int) $stars ) ) . '</p>';
 				}
 
 				if ( ! empty( $testimonial_author ) ) {

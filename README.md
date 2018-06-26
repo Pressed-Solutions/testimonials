@@ -22,9 +22,9 @@ Options
 Filters
 -----
 
-By default, the `show_star` parameter loads the `dashicons` stylesheet. Use the filter `testimonials_enqueue_dashicons` to return `false` to disable it from loading.
+By default, the `show_star` parameter loads the `dashicons` stylesheet. Use the filter `simple_testimonials_enqueue_dashicons` to return `false` to disable it from loading.
 
-The filter `testimonials_star_html` can be used to change the star HTML content (e.g., using an image, a different class, etc.). This string will be printed once for each star.
+The filter `simple_testimonials_star_html` can be used to change the star HTML content (e.g., using an image, a different class, etc.). This string will be printed once for each star.
 
 Changelog
 ---------
