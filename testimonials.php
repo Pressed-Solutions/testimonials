@@ -165,6 +165,7 @@ class Simple_Testimonials {
 				'show_rating'    => false,
 				'show_stars'     => false,
 				'show_paging'    => false,
+				'wrapper_class'  => '',
 			), $atts
 		);
 
@@ -200,7 +201,7 @@ class Simple_Testimonials {
 
 		ob_start();
 		if ( $testimonial_query->have_posts() ) {
-			echo '<div class="testimonials shortcode">';
+			echo '<div class="testimonials shortcode ' . esc_attr( $shortcode_atts['wrapper_class'] ) . '">';
 			while ( $testimonial_query->have_posts() ) {
 				$testimonial_query->the_post();
 				$testimonial_author = get_post_meta( get_the_ID(), 'testimonial_author', true );
