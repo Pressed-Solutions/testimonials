@@ -5,7 +5,7 @@
  * Description: A plugin to display testimonials with a shortcode
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
- * Version: 2.6
+ * Version: 2.6.1
  * Tested up to: 4.9.6
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -186,6 +186,7 @@ class Simple_Testimonials {
 			array(
 				'postid'         => null,
 				'posts_per_page' => 10,
+				'offset'         => 0,
 				'order'          => 'DESC',
 				'orderby'        => 'date',
 				'tax_taxonomy'   => 'category',
@@ -200,13 +201,17 @@ class Simple_Testimonials {
 			), $atts
 		);
 
+		$remove_from_query = array( 'show_content', 'show_rating', 'show_stars', 'show_paging', 'wrapper_class' );
+		foreach ( $remove_from_query as $key ) {
+			$$key = $shortcode_atts[ $key ];
+			unset( $shortcode_atts[ $key ] );
+		}
+
 		// WP_Query arguments.
 		$args = array(
 			'post_type'      => array( 'testimonial' ),
 			'posts_per_page' => $shortcode_atts['posts_per_page'],
 		);
-
-		$args = wp_parse_args( $shortcode_atts, $args );
 
 		if ( ! empty( $wp_query->query['page'] ) ) {
 			$page           = $wp_query->query['page'];
@@ -226,30 +231,38 @@ class Simple_Testimonials {
 					'operator' => $shortcode_atts['tax_operator'],
 				),
 			);
+
+			// Remove keys from array so they’re not merged into the WP query.
+			unset( $shortcode_atts['tax_taxonomy'] );
+			unset( $shortcode_atts['tax_field'] );
+			unset( $shortcode_atts['tax_terms'] );
+			unset( $shortcode_atts['tax_operator'] );
 		}
+
+		$args = wp_parse_args( $shortcode_atts, $args );
 
 		$testimonial_query = new WP_Query( $args );
 
 		ob_start();
 		if ( $testimonial_query->have_posts() ) {
-			echo '<div class="testimonials shortcode ' . esc_attr( $shortcode_atts['wrapper_class'] ) . '">';
+			echo '<div class="testimonials shortcode ' . esc_attr( $wrapper_class ) . '">';
 			while ( $testimonial_query->have_posts() ) {
 				$testimonial_query->the_post();
 				$testimonial_author = get_post_meta( get_the_ID(), 'testimonial_author', true );
 
 				echo '<article class="' . esc_attr( implode( ' ', get_post_class( 'shortcode' ) ) ) . '"><h3><a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a></h3>';
 
-				if ( $shortcode_atts['show_content'] ) {
+				if ( $show_content ) {
 					echo wp_kses_post( apply_filters( 'the_content', get_the_content() ) );
 				} else {
 					the_excerpt();
 				}
 
-				if ( $shortcode_atts['show_rating'] ) {
+				if ( $show_rating ) {
 					echo '<p class="rating">' . get_the_term_list( get_the_ID(), 'testimonial_rating' ) . '</p>';
 				}
 
-				if ( $shortcode_atts['show_stars'] ) {
+				if ( $show_stars ) {
 					// By default, enqueue dashicons stylesheet.
 					if ( apply_filters( 'simple_testimonials_enqueue_dashicons', true ) ) {
 						wp_enqueue_style( 'dashicons' );
@@ -265,7 +278,7 @@ class Simple_Testimonials {
 			}
 
 			// Paging.
-			if ( $shortcode_atts['show_paging'] ) {
+			if ( $show_paging ) {
 				echo '<div class="paging">';
 				if ( $page > 1 ) {
 					echo '<a class="btn btn-primary button" href="' . esc_url( home_url( $wp_query->query['pagename'] ) ) . '/' . esc_attr( $page - 1 ) . '">Previous</a> ';

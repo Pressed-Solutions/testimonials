@@ -29,6 +29,9 @@ The filter `simple_testimonials_star_html` can be used to change the star HTML c
 Changelog
 ---------
 
+### 2.6.1
+ - Fix some bugs with the `offset` parameter.
+
 ### 2.6
  - Add length taxonomy
  - Add `wrapper_class` shortcode parameter
