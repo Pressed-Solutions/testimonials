@@ -281,7 +281,7 @@ class Simple_Testimonials {
 					 * @param  string $content            Full HTML content.
 					 * @param  string $testimonial_author Author name.
 					 */
-					echo wp_kses_post( apply_filters( 'simple_testimonials_author_html', '<p class="author"><em>&mdash;' . $testimonial_author . '</em></p>' ), $testimonial_author );
+					echo wp_kses_post( apply_filters( 'simple_testimonials_author_html', '<p class="author"><em>&mdash;' . $testimonial_author . '</em></p>', $testimonial_author ) );
 				}
 				echo '</article>';
 			}
