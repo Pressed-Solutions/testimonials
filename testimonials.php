@@ -246,6 +246,14 @@ class Simple_Testimonials {
 		ob_start();
 		if ( $testimonial_query->have_posts() ) {
 			echo '<div class="testimonials shortcode ' . esc_attr( $wrapper_class ) . '">';
+
+			/**
+			 * Runs before posts are displayed.
+			 *
+			 * @since  2.7.2
+			 */
+			do_action( 'simple_testimonials_before_posts' );
+
 			while ( $testimonial_query->have_posts() ) {
 				$testimonial_query->the_post();
 				$testimonial_author = get_post_meta( get_the_ID(), 'testimonial_author', true );
@@ -300,7 +308,26 @@ class Simple_Testimonials {
 					echo '</div>';
 				}
 			}
+
+			/**
+			 * Runs after posts are displayed.
+			 *
+			 * @since  2.7.2
+			 */
+			do_action( 'simple_testimonials_after_posts' );
+
 			echo '</div>';
+		} else {
+
+			/**
+			 * Runs if no posts were found.
+			 *
+			 * @since  2.7.2
+			 *
+			 * @param  array $shortcode_atts Shortcode attributes.
+			 */
+			do_action( 'simple_testimonials_no_posts', $shortcode_atts );
+
 		}
 		wp_reset_postdata();
 
