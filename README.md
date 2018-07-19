@@ -63,11 +63,23 @@ function my_custom_author_html( $content, $author ) {
 add_filter( 'simple_testimonials_author_html', 'my_custom_author_html', 10, 2 );
 ```
 
+Actions
+-------
+
+Several action hooks are available:
+
+- `simple_testimonials_before_posts`: runs inside the wrapper before any testimonials are displayed
+- `simple_testimonials_after_posts`: runs inside the wrapper after all testimonials are displayed
+- `simple_testimonials_no_posts`: runs if no testimonials were found; passes the `$shortcode_atts` array
+
 Changelog
 ---------
 
+### 2.7.1
+ - Add action hooks.
+
 ### 2.7.0
- - Add `simple_testimonials_author_html` filter
+ - Add `simple_testimonials_author_html` filter.
 
 ### 2.6.1
  - Fix some bugs with the `offset` parameter.

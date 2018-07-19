@@ -5,7 +5,7 @@
  * Description: A plugin to display testimonials with a shortcode
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
- * Version: 2.7.0
+ * Version: 2.7.1
  * Tested up to: 4.9.6
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -250,7 +250,7 @@ class Simple_Testimonials {
 			/**
 			 * Runs before posts are displayed.
 			 *
-			 * @since  2.7.2
+			 * @since  2.7.1
 			 */
 			do_action( 'simple_testimonials_before_posts' );
 
@@ -312,7 +312,7 @@ class Simple_Testimonials {
 			/**
 			 * Runs after posts are displayed.
 			 *
-			 * @since  2.7.2
+			 * @since  2.7.1
 			 */
 			do_action( 'simple_testimonials_after_posts' );
 
@@ -322,7 +322,7 @@ class Simple_Testimonials {
 			/**
 			 * Runs if no posts were found.
 			 *
-			 * @since  2.7.2
+			 * @since  2.7.1
 			 *
 			 * @param  array $shortcode_atts Shortcode attributes.
 			 */
