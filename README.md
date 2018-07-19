@@ -28,7 +28,7 @@ By default, the `show_star` parameter loads the `dashicons` stylesheet. Add this
 add_filter( 'simple_testimonials_enqueue_dashicons', '__return_false' );
 ```
 
-The filter `simple_testimonials_star_html` can be used to change the star HTML content (e.g., using an image, a different class, etc.). This string will be printed once for each star.
+The filter `simple_testimonials_star_html` can be used to change the star HTML content (e.g., using an image, a different class, etc.). This string will be printed once for each star. For example:
 
 ```
 /**
@@ -45,8 +45,29 @@ function my_custom_star_html( $content ) {
 add_filter( 'simple_testimonials_star_html', 'my_custom_star_html' );
 ```
 
+The filter `simple_testimonials_author_html` can be used to modify the author line. For example:
+
+```
+/**
+ * Modifies testimonial author HTML.
+ *
+ * @param  {string} $content Default author HTML.
+ * @param  {string} $author  Author name.
+ *
+ * @return {string}          Modified author HTML.
+ */
+function my_custom_author_html( $content, $author ) {
+	$content = '<p class="author modified">Testimonial by ' . esc_attr( $author ) . '</p>';
+	return $content;
+}
+add_filter( 'simple_testimonials_author_html', 'my_custom_author_html', 10, 2 );
+```
+
 Changelog
 ---------
+
+### 2.7.0
+ - Add `simple_testimonials_author_html` filter
 
 ### 2.6.1
  - Fix some bugs with the `offset` parameter.

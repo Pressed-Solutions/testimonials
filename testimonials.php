@@ -5,7 +5,7 @@
  * Description: A plugin to display testimonials with a shortcode
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com/
- * Version: 2.6.1
+ * Version: 2.7.0
  * Tested up to: 4.9.6
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -273,7 +273,16 @@ class Simple_Testimonials {
 				}
 
 				if ( ! empty( $testimonial_author ) ) {
-					echo '<p class="author"><em>&mdash;' . esc_attr( $testimonial_author ) . '</em></p>'; }
+					/**
+					 * Modify the author HTML.
+					 *
+					 * @since 2.7.0
+					 *
+					 * @param  string $content            Full HTML content.
+					 * @param  string $testimonial_author Author name.
+					 */
+					echo wp_kses_post( apply_filters( 'simple_testimonials_author_html', '<p class="author"><em>&mdash;' . $testimonial_author . '</em></p>' ), $testimonial_author );
+				}
 				echo '</article>';
 			}
 
